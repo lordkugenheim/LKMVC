@@ -24,5 +24,7 @@ if (file_exists(DIR_CONTROL . $vars[1] . '.php')) {
 }
 
 if (isset($return)) {
-    echo json_encode($return);
+    $response = Response::getInstance();
+    http_response_code($response->getHttpCode());
+    echo $response->buildResponse();
 }
