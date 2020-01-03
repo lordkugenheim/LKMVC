@@ -1,9 +1,9 @@
 <?php
 
-$includeFiles = array_merge(glob("../config/*.php"), glob("../classes/*.php"));
-
-foreach ($includeFiles as $filename) {
-    include $filename;
+foreach (['config', 'classes', 'models'] as $type) {
+    foreach (glob('../' . $type . '/*.php') as $filename) {
+        include $filename;
+    }
 }
 
 $response = Core\Response::getInstance();
