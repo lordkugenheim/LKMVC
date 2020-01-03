@@ -62,6 +62,7 @@ class Response
 
     public function send()
     {
+        header('Content-Type: application/json');
         http_response_code($this->getHttpCode());
         echo $this->buildResponse();
         die;
