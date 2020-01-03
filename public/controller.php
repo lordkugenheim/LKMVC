@@ -12,7 +12,9 @@ $response = Core\Response::getInstance();
 if (!in_array($_SERVER['REQUEST_METHOD'], ALLOWED_METHODS)) {
     $response->setHttpCode(405);
     $response->addHeader('Allow: ' . implode(',', ALLOWED_METHODS));
-    $response->addOutput(['error', 'Invalid request method. Allowed methods are ' . implode(', ', ALLOWED_METHODS)]);
+    $response->setSuccess(false);
+    $response->addOutput(['message'=>'Invalid request method. Allowed methods are ' . implode(', ', ALLOWED_METHODS)]);
+    $response->send();
 }
 
 // get our vars from the url
@@ -22,7 +24,10 @@ $params = array_slice($vars, 2);
 // check the controller exists and load it
 if (file_exists(DIR_CONTROL . $vars[1] . '.php')) {
     include_once(DIR_CONTROL . $vars[1] . '.php');
+} else {
+    $response->setHttpCode(400);
+    $response->setSuccess(false);
+    $response->addOutput(['message'=>'Requested endpoint is unavailable']);
 }
 
-http_response_code($response->getHttpCode());
-echo $response->buildResponse();
+$response->send();

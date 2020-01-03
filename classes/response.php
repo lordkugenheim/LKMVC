@@ -45,8 +45,20 @@ class Response
         }
     }
 
+    public function setSuccess($success = true)
+    {
+        $this->addOutput(['status' => $success ? 'success' : 'error']);
+    }
+
     public function buildResponse()
     {
         return json_encode($this->output);
+    }
+
+    public function send()
+    {
+        http_response_code($this->getHttpCode());
+        echo $this->buildResponse();
+        die;
     }
 }
