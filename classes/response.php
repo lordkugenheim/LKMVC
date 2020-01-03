@@ -6,7 +6,8 @@ class Response
 {
     public static $instance;
 
-    private $httpCode = 200;
+    private $httpCode = 400;
+    private $status = false;
     private $output = [];
 
     public static function getInstance()
@@ -47,11 +48,15 @@ class Response
 
     public function setSuccess($success = true)
     {
-        $this->addOutput(['status' => $success ? 'success' : 'error']);
+        $this->status = (bool)$success;
     }
 
     public function buildResponse()
     {
+        if (empty($this->output)) {
+            $this->addOutput(['message'=>'Requested endpoint is unavailable']);
+        }
+        $this->addOutput(['Status' => $this->status ? 'success' : 'error']);
         return json_encode($this->output);
     }
 

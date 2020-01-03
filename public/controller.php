@@ -24,10 +24,6 @@ $params = array_slice($vars, 2);
 // check the controller exists and load it
 if (file_exists(DIR_CONTROL . $vars[1] . '.php')) {
     include_once(DIR_CONTROL . $vars[1] . '.php');
-} else {
-    $response->setHttpCode(400);
-    $response->setSuccess(false);
-    $response->addOutput(['message'=>'Requested endpoint is unavailable']);
 }
 
 $response->send();
