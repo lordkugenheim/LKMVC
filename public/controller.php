@@ -1,17 +1,18 @@
 <?php
 
-include('../config/config.php');
+$includeFiles = array_merge(glob("../config/*.php"), glob("../classes/*.php"));
 
-$allowed_methods = [
-    'GET',
-    'POST',
-    'PUT',
-    'DELETE',
-];
+foreach ($includeFiles as $filename) {
+    include $filename;
+}
+
+$response = Core\Response::getInstance();
 
 // block requests not in the allowed_methods
-if (!in_array($_SERVER['REQUEST_METHOD'], $allowed_methods)) {
-    die;
+if (!in_array($_SERVER['REQUEST_METHOD'], ALLOWED_METHODS)) {
+    $response->setHttpCode(405);
+    $response->addHeader('Allow: ' . implode(',', ALLOWED_METHODS));
+    $response->addOutput(['error', 'Invalid request method. Allowed methods are ' . implode(', ', ALLOWED_METHODS)]);
 }
 
 // get our vars from the url
@@ -23,8 +24,5 @@ if (file_exists(DIR_CONTROL . $vars[1] . '.php')) {
     include_once(DIR_CONTROL . $vars[1] . '.php');
 }
 
-if (isset($return)) {
-    $response = Response::getInstance();
-    http_response_code($response->getHttpCode());
-    echo $response->buildResponse();
-}
+http_response_code($response->getHttpCode());
+echo $response->buildResponse();
