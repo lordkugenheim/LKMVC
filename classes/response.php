@@ -9,6 +9,7 @@ class Response
     private $httpCode = 400;
     private $status = false;
     private $output = [];
+    private $headers = [];
 
     public static function getInstance()
     {
@@ -34,7 +35,7 @@ class Response
 
     public function addHeader($header)
     {
-
+        $this->headers[] = $header;
     }
 
     public function addOutput($output)
@@ -63,6 +64,9 @@ class Response
     public function send()
     {
         header('Content-Type: application/json');
+        foreach ($this->headers as $header) {
+            header($header);
+        }
         http_response_code($this->getHttpCode());
         echo $this->buildResponse();
         die;
