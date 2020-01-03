@@ -65,7 +65,7 @@ class Response
         if (empty($this->output)) {
             $this->addOutput(['message'=>'Requested endpoint is unavailable']);
         }
-        $this->addOutput(['Status' => $this->status ? 'success' : 'error']);
+        $this->addOutput(['status' => $this->status ? 'success' : 'error']);
         return json_encode($this->output);
     }
 
