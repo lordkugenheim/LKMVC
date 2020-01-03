@@ -10,9 +10,9 @@ $response = Core\Response::getInstance();
 
 // block requests not in the allowed_methods
 if (!in_array($_SERVER['REQUEST_METHOD'], ALLOWED_METHODS)) {
+    $response->setSuccess(false);
     $response->setHttpCode(405);
     $response->addHeader('Allow: ' . implode(',', ALLOWED_METHODS));
-    $response->setSuccess(false);
     $response->addOutput(['message'=>'Invalid request method. Allowed methods are ' . implode(', ', ALLOWED_METHODS)]);
     $response->send();
 }
