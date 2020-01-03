@@ -52,7 +52,15 @@ class Response
         $this->status = (bool)$success;
     }
 
-    public function buildResponse()
+    public function send()
+    {
+        $this->sendHeaders();
+        http_response_code($this->getHttpCode());
+        echo $this->buildResponse();
+        die;
+    }
+
+    private function buildResponse()
     {
         if (empty($this->output)) {
             $this->addOutput(['message'=>'Requested endpoint is unavailable']);
@@ -61,14 +69,12 @@ class Response
         return json_encode($this->output);
     }
 
-    public function send()
+    private function sendHeaders()
     {
         header('Content-Type: application/json');
+        header("Access-Control-Allow-Origin: *");
         foreach ($this->headers as $header) {
             header($header);
         }
-        http_response_code($this->getHttpCode());
-        echo $this->buildResponse();
-        die;
     }
 }
