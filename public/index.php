@@ -26,5 +26,8 @@ $params = array_slice($vars, 2);
 if (file_exists(DIR_CONTROL . $vars[1] . '.php')) {
     include_once(DIR_CONTROL . $vars[1] . '.php');
 }
+if (file_exists(DIR_MODEL . $vars[1] . '.php')) {
+    include_once(DIR_MODEL . $vars[1] . '.php');
+}
 
 Core\Controller::getinstance()->send();
