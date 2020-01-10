@@ -1,20 +1,19 @@
 <?php
 
-foreach (['config', 'classes', 'models'] as $type) {
+foreach (['config', 'classes'] as $type) {
     foreach (glob('../' . $type . '/*.php') as $filename) {
         include $filename;
     }
 }
 
-$response = Core\Response::getInstance();
-
 // block requests not in the allowed_methods
 if (!in_array($_SERVER['REQUEST_METHOD'], ALLOWED_METHODS)) {
-    $response->setSuccess(false);
-    $response->setHttpCode(405);
-    $response->addHeader('Allow: ' . implode(',', ALLOWED_METHODS));
-    $response->addOutput(['message'=>'Invalid request method. Allowed methods are ' . implode(', ', ALLOWED_METHODS)]);
-    $response->send();
+    $header = 'Allow: ' . implode(',', ALLOWED_METHODS);
+    $output = 'Invalid request method. Allowed methods are ' . implode(', ', ALLOWED_METHODS);
+    Controller::getinstance()->addHeader($header);
+    Controller::getinstance()->addOutput(['message' => $output]);
+    Controller::getinstance()->setHttpCode(405);
+    Controller::getinstance()->send();
 }
 
 // get our vars from the url
@@ -26,4 +25,4 @@ if (file_exists(DIR_CONTROL . $vars[1] . '.php')) {
     include_once(DIR_CONTROL . $vars[1] . '.php');
 }
 
-$response->send();
+Controller::getinstance()->ssend();
