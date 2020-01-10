@@ -18,7 +18,7 @@ if (!in_array($_SERVER['REQUEST_METHOD'], ALLOWED_METHODS)) {
     Core\Controller::getinstance()->send();
 }
 
- $vars = explode('/', $_SERVER['REQUEST_URI']);
+$vars = explode('/', $_SERVER['REQUEST_URI']);
  
 // check the controller exists and load it
 if (file_exists(DIR_CONTROL . $vars[1] . '.php')) {
