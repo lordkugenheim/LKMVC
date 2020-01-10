@@ -19,11 +19,6 @@ class Controller
         return self::$instance;
     }
 
-    public function getHttpCode()
-    {
-        return $this->httpCode;
-    }
-
     public function setHttpCode($httpCode)
     {
         if (is_numeric($httpCode)) {
@@ -31,6 +26,11 @@ class Controller
             return true;
         }
         return false;
+    }
+
+    public function getHttpCode()
+    {
+        return $this->httpCode;
     }
 
     public function addHeader($header)
@@ -47,6 +47,7 @@ class Controller
         }
     }
 
+    // TODO - change this to set based on the response code
     public function setSuccess($success = true)
     {
         $this->status = (bool)$success;
