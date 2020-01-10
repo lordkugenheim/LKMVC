@@ -6,14 +6,16 @@ foreach (['config', 'classes'] as $type) {
     }
 }
 
+include DIR_CONTROL . 'controller.php';
+
 // block requests not in the allowed_methods
 if (!in_array($_SERVER['REQUEST_METHOD'], ALLOWED_METHODS)) {
     $header = 'Allow: ' . implode(',', ALLOWED_METHODS);
     $output = 'Invalid request method. Allowed methods are ' . implode(', ', ALLOWED_METHODS);
-    Controller::getinstance()->addHeader($header);
-    Controller::getinstance()->addOutput(['message' => $output]);
-    Controller::getinstance()->setHttpCode(405);
-    Controller::getinstance()->send();
+    Core\Controller::getinstance()->addHeader($header);
+    Core\Controller::getinstance()->addOutput(['message' => $output]);
+    Core\Controller::getinstance()->setHttpCode(405);
+    Core\Controller::getinstance()->send();
 }
 
 // get our vars from the url
@@ -25,4 +27,4 @@ if (file_exists(DIR_CONTROL . $vars[1] . '.php')) {
     include_once(DIR_CONTROL . $vars[1] . '.php');
 }
 
-Controller::getinstance()->ssend();
+Core\Controller::getinstance()->send();

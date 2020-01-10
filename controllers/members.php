@@ -1,6 +1,5 @@
 <?php
 
-$response = Core\Response::getInstance();
-$response->setSuccess(true);
-$response->setHttpCode(200);
-$response->addOutput(['message'=>'We did something harrumble!']);
+Core\Controller::getInstance()->setSuccess(true);
+Core\Controller::getInstance()->setHttpCode(200);
+Core\Controller::getInstance()->addOutput(['message'=>'We did something harrumble!']);
