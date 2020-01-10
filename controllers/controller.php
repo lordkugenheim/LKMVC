@@ -11,6 +11,30 @@ class Controller
     private $output = [];
     private $headers = [];
 
+    private const ALLOWED_METHODS = [
+        'GET',
+        'POST',
+        'PUT',
+        'DELETE',
+    ];
+
+    public function __construct()
+    {
+        echo 'yooo';
+        if (!Controller::allowedMethod()) {
+            echo 'fuk yooooooooooo';
+        }
+    }
+
+    public static function allowedMethod()
+    {
+        if (in_array($_SERVER['REQUEST_METHOD'], ALLOWED_METHODS)){
+            return true;
+        }
+        return false;
+        
+    }
+
     public static function getInstance()
     {
         if (!(self::$instance instanceof self)) {
