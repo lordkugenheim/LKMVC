@@ -10,12 +10,11 @@ class Repeat extends Controller
 
     public function __construct()
     {
-        echo 'happy days';
-        parent::__construct();
+        if (!$this->allowedMethod()) {
+            echo 'oh no spaghetti';
+        }
     }
 }
-
-
 
 //TODO build a set of re-usable responses?
 // switch () {

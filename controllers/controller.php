@@ -11,28 +11,24 @@ class Controller
     private $output = [];
     private $headers = [];
 
-    private const ALLOWED_METHODS = [
+    const ALLOWED_METHODS = [
         'GET',
         'POST',
         'PUT',
         'DELETE',
     ];
 
-    public function __construct()
+    public function setClass($classname)
     {
-        echo 'yooo';
-        if (!Controller::allowedMethod()) {
-            echo 'fuk yooooooooooo';
-        }
+        
     }
 
-    public static function allowedMethod()
+    public function allowedMethod()
     {
-        if (in_array($_SERVER['REQUEST_METHOD'], ALLOWED_METHODS)){
-            return true;
+        if (in_array($_SERVER['REQUEST_METHOD'], static::ALLOWED_METHODS)) {
+            return self::ALLOWED_METHODS;
         }
         return false;
-        
     }
 
     public static function getInstance()

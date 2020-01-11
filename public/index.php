@@ -6,7 +6,7 @@ foreach (['config', 'classes'] as $type) {
     }
 }
 
-include DIR_CONTROL . 'controller.php';
+require DIR_CONTROL . 'controller.php';
 
 // block requests not in the allowed_methods
 // if (!in_array($_SERVER['REQUEST_METHOD'], ALLOWED_METHODS)) {
@@ -18,16 +18,18 @@ include DIR_CONTROL . 'controller.php';
 //     Core\Controller::getinstance()->send();
 // }
 
-$vars = explode('/', $_SERVER['REQUEST_URI']);
-
+$endpoint = explode('/', $_SERVER['REQUEST_URI'])[1];
 
 // check the controller exists and load it
-if (file_exists(DIR_CONTROL . $vars[1] . '.php')) {
-    include_once(DIR_CONTROL . $vars[1] . '.php');
+if (file_exists(DIR_CONTROL . $endpoint . '.php')) {
+    include_once(DIR_CONTROL . $endpoint . '.php');
 }
 // check the model exists and load it
-if (file_exists(DIR_MODEL . $vars[1] . '.php')) {
-    include_once(DIR_MODEL . $vars[1] . '.php');
+if (file_exists(DIR_MODEL . $endpoint . '.php')) {
+    include_once(DIR_MODEL . $endpoint . '.php');
 }
-// send our response
-// Core\Controller::getinstance()->send();
+
+$classname = 'Core\\' . ucwords($endpoint);
+$class = new $classname();
+
+Core\Controller::getinstance()->send();
