@@ -8,6 +8,7 @@ class Repeat
         'POST',
     ];
 
+    //TODO: we can improve this right?
     public function __construct()
     {
         $message = Controller::getParameter('message');
