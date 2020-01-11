@@ -2,7 +2,7 @@
 
 namespace Core;
 
-class Repeat extends Controller
+class Repeat extends RepeatModel
 {
     const ALLOWED_METHODS = [
         'POST',
@@ -10,7 +10,7 @@ class Repeat extends Controller
 
     public function __construct()
     {
-        if ($this->allowedMethod()) {
+        if (Controller::getinstance()->allowedMethod()) {
             $this->repeatMessage();
         } else {
             // TODO Reusable Responses
@@ -19,12 +19,5 @@ class Repeat extends Controller
             Controller::getinstance()->addHeader($header);
             Controller::getinstance()->setHttpCode(405);
         }
-    }
-
-    private function repeatMessage()
-    {
-        $message = Controller::getParameter('message');
-        Controller::getinstance()->addOutput(['message' => $message]);
-        Controller::getinstance()->setHttpCode(200);
     }
 }

@@ -8,28 +8,21 @@ foreach (['config', 'classes'] as $type) {
 
 require DIR_CONTROL . 'controller.php';
 
-// block requests not in the allowed_methods
-// if (!in_array($_SERVER['REQUEST_METHOD'], ALLOWED_METHODS)) {
-//     $header = 'Allow: ' . implode(',', ALLOWED_METHODS);
-//     $output = 'Invalid request method. Allowed methods are ' . implode(', ', ALLOWED_METHODS);
-//     Core\Controller::getinstance()->addHeader($header);
-//     Core\Controller::getinstance()->addOutput(['message' => $output]);
-//     Core\Controller::getinstance()->setHttpCode(405);
-//     Core\Controller::getinstance()->send();
-// }
-
 $endpoint = explode('/', $_SERVER['REQUEST_URI'])[1];
 
-// check the controller exists and load it
-if (file_exists(DIR_CONTROL . $endpoint . '.php')) {
-    include_once(DIR_CONTROL . $endpoint . '.php');
-}
+
 // check the model exists and load it
 if (file_exists(DIR_MODEL . $endpoint . '.php')) {
     include_once(DIR_MODEL . $endpoint . '.php');
 }
+// check the controller exists and load it
+if (file_exists(DIR_CONTROL . $endpoint . '.php')) {
+    include_once(DIR_CONTROL . $endpoint . '.php');
+}
 
 $classname = 'Core\\' . ucwords($endpoint);
-$class = new $classname();
+if (class_exists($classname)) {
+    $class = new $classname();
+}
 
 Core\Controller::getinstance()->send();
