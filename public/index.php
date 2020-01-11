@@ -10,7 +10,7 @@ require DIR_CONTROL . 'controller.php';
 
 $endpoint = explode('/', $_SERVER['REQUEST_URI'])[1];
 
-
+//TODO: investigate autoloading to replace this
 // check the model exists and load it
 if (file_exists(DIR_MODEL . $endpoint . '.php')) {
     include_once(DIR_MODEL . $endpoint . '.php');
