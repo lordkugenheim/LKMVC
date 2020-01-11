@@ -18,9 +18,12 @@ class Controller
         'DELETE',
     ];
 
-    public function setClass($classname)
+    public static function getInstance()
     {
-        
+        if (!(self::$instance instanceof self)) {
+            self::$instance = new self();
+        }
+        return self::$instance;
     }
 
     public function allowedMethod()
@@ -31,19 +34,19 @@ class Controller
         return false;
     }
 
-    public static function getInstance()
-    {
-        if (!(self::$instance instanceof self)) {
-            self::$instance = new self();
-        }
-        return self::$instance;
-    }
-
     public function setHttpCode($httpCode)
     {
         if (is_numeric($httpCode)) {
             $this->httpCode = $httpCode;
             return true;
+        }
+        return false;
+    }
+
+    public static function getParameter($parameter)
+    {
+        if (isset($_REQUEST[$parameter])) {
+            return trim($_REQUEST[$parameter];
         }
         return false;
     }
