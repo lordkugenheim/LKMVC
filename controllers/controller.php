@@ -26,10 +26,10 @@ class Controller
         return self::$instance;
     }
 
-    public function allowedMethod()
+    public function allowedMethod($allowed_methods = self::ALLOWED_METHODS)
     {
-        if (in_array($_SERVER['REQUEST_METHOD'], static::ALLOWED_METHODS)) {
-            return self::ALLOWED_METHODS;
+        if (in_array($_SERVER['REQUEST_METHOD'], $allowed_methods)) {
+            return true;
         }
         return false;
     }

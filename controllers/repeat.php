@@ -2,7 +2,7 @@
 
 namespace Core;
 
-class Repeat extends RepeatModel
+class Repeat
 {
     const ALLOWED_METHODS = [
         'POST',
@@ -10,14 +10,21 @@ class Repeat extends RepeatModel
 
     public function __construct()
     {
-        if (Controller::getinstance()->allowedMethod()) {
-            $this->repeatMessage();
-        } else {
-            // TODO Reusable Responses
+        $message = Controller::getParameter('message');
+
+        if ($message && Controller::getinstance()->allowedMethod()) {
+            $output = $message;
+            Controller::getinstance()->setHttpCode(200);
+        } elseif (!Controller::getinstance()->allowedMethod(self::ALLOWED_METHODS)) {
             $header = 'Allow: POST';
             $output = 'Invalid request method. Allowed methods are POST';
             Controller::getinstance()->addHeader($header);
             Controller::getinstance()->setHttpCode(405);
+        } elseif (!$message) {
+            $output = 'Malformed request';
+            Controller::getinstance()->setHttpCode(405);
         }
+        
+        Controller::getinstance()->addOutput(['message' => $output]);
     }
 }
