@@ -16,8 +16,8 @@ class Repeat extends Controller
             // TODO Reusable Responses
             $header = 'Allow: POST';
             $output = 'Invalid request method. Allowed methods are POST';
-            Core\Controller::getinstance()->addHeader($header);
-            Core\Controller::getinstance()->setHttpCode(405);
+            Controller::getinstance()->addHeader($header);
+            Controller::getinstance()->setHttpCode(405);
         }
     }
 

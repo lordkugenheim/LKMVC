@@ -46,7 +46,7 @@ class Controller
     public static function getParameter($parameter)
     {
         if (isset($_REQUEST[$parameter])) {
-            return trim($_REQUEST[$parameter];
+            return trim($_REQUEST[$parameter]);
         }
         return false;
     }
