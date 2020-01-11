@@ -22,7 +22,7 @@ class Repeat
             Controller::getinstance()->setHttpCode(405);
         } elseif (!$message) {
             $output = 'Malformed request';
-            Controller::getinstance()->setHttpCode(405);
+            Controller::getinstance()->setHttpCode(400);
         }
         
         Controller::getinstance()->addOutput(['message' => $output]);
