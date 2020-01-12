@@ -7,7 +7,7 @@ trait ControllerTrait
     public function dobyMethod()
     {
         $function_name = strtolower($_SERVER['REQUEST_METHOD']);
-        if (function_exists()) {
+        if (method_exists($this, $function_name)) {
             return $this->$function_name();
         }
         return false;
