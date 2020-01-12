@@ -4,18 +4,16 @@ namespace Core;
 
 trait ControllerTrait
 {
-
-    private static $instance;
-
-    public static function getInstance()
+    public function dobyMethod()
     {
-        if (!(self::$instance instanceof self)) {
-            self::$instance = new self();
+        $function_name = strtolower($_SERVER['REQUEST_METHOD']);
+        if (function_exists()) {
+            return $this->$function_name();
         }
-        return self::$instance;
+        return false;
     }
 
-    public function isvalidRoute($allowed_methods = self::ALLOWED_METHODS)
+    public function isvalidMethod($allowed_methods = self::ALLOWED_METHODS)
     {
         if (in_array($_SERVER['REQUEST_METHOD'], $allowed_methods)) {
             return true;
@@ -23,7 +21,7 @@ trait ControllerTrait
         return false;
     }
 
-    public static function getParameter($parameter)
+    public function getParameter($parameter)
     {
         if (isset($_REQUEST[$parameter])) {
             return trim($_REQUEST[$parameter]);

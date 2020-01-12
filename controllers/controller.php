@@ -30,7 +30,7 @@ class Controller
     public static function getEndpoint($endpoint_name)
     {
         $endpoint_name = "Core\\" . ucwords($endpoint_name);
-        return $endpoint_name::getInstance();
+        return new $endpoint_name;
     }
 
     public function gethttpCode()
@@ -53,6 +53,19 @@ class Controller
             return true;
         }
         return false;
+    }
+
+    public function setbyConst($const)
+    {
+        if (array_key_exists('header', $const)) {
+            $this->addHeader($const['header']);
+        }
+        if (array_key_exists('message', $const)) {
+            $this->addOutput('message', $const['message']);
+        }
+        if (array_key_exists('httpcode', $const)) {
+            $this->sethttpCode($const['httpcode']);
+        }
     }
 
     public function addHeader($header)
