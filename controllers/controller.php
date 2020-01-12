@@ -4,6 +4,8 @@ namespace Core;
 
 class Controller
 {
+    private static $instance;
+
     private $httpCode;
     private $headers = [];
 
@@ -17,7 +19,8 @@ class Controller
 
     public static function isvalidEndpoint($endpoint_name)
     {
-        if (!$endpoint_name || !file_exists(DIR_CONTROL . $endpoint_name) || !file_exists(DIR_MODEL . $endpoint_name)) {
+        $filename = $endpoint_name . '.php';
+        if (!$endpoint_name || !file_exists(DIR_CONTROL . $filename) || !file_exists(DIR_MODEL . $filename)) {
             return false;
         }
         return true;
@@ -25,14 +28,8 @@ class Controller
 
     public static function getEndpoint($endpoint_name)
     {
-        if (Controller::isvalidEndpoint($endpoint_name)) {
-            include_once(DIR_CONTROL . $endpoint_name);
-            include_once(DIR_MODEL . $endpoint_name);
-            if (function_exists($endpoint_name::getinstance())) {
-                return $endpoint_name::getinstance();
-            }
-        }
-        return false;
+        $endpoint_name = "Core\\" . ucwords($endpoint_name);
+        return $endpoint_name::getInstance();
     }
 
     private function getBody($output = false)
@@ -54,10 +51,10 @@ class Controller
         }
     }
 
-    public function sendAll()
-    {
-        http_response_code(Controller::getinstance()->getHttpCode());
-        Controller::getinstance()->sendHeaders();
-        echo Controller::getinstance()->getBody();
-    }
+    // public function sendAll()
+    // {
+    //     http_response_code(Controller::getinstance()->getHttpCode());
+    //     Controller::getinstance()->sendHeaders();
+    //     echo Controller::getinstance()->getBody();
+    // }
 }

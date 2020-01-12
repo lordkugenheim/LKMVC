@@ -2,8 +2,19 @@
 
 namespace Core;
 
-trait Controller
+trait ControllerTrait
 {
+
+    private static $instance;
+
+    public static function getInstance()
+    {
+        if (!(self::$instance instanceof self)) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
     public function setHttpCode($httpCode)
     {
         if (is_numeric($httpCode)) {
