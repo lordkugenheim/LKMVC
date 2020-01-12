@@ -4,7 +4,7 @@ namespace Core;
 
 class Repeat extends RepeatModel // implements ControllerInterface
 {
-    use MasterController;
+    use Controller;
 
     const ALLOWED_METHODS = [
         'POST',
