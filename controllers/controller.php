@@ -26,10 +26,10 @@ class Controller
 
     public static function isvalidEndpoint($endpoint_name)
     {
-        if (file_exists(DIR_CONTROL . $endpoint_name) && file_exists(DIR_MODEL . $endpoint_name)) {
-            return true;
+        if (!$endpoint_name || !file_exists(DIR_CONTROL . $endpoint_name) || !file_exists(DIR_MODEL . $endpoint_name)) {
+            return false;
         }
-        return false;
+        return true;
     }
 
     public static function getEndpoint($endpoint_name)
