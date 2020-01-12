@@ -74,7 +74,7 @@ class Controller
 
     private function sendHeaders()
     {
-        // header('Content-Type: application/json');
+        header('Content-Type: application/json');
         header("Access-Control-Allow-Origin: *");
         foreach ($this->headers as $header) {
             header($header);
