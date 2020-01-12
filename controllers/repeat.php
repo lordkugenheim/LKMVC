@@ -2,13 +2,14 @@
 
 namespace Core;
 
-class Repeat
+class Repeat extends RepeatModel // implements ControllerInterface
 {
+    use MasterController;
+
     const ALLOWED_METHODS = [
         'POST',
     ];
 
-    //TODO: we can improve this right?
     public function __construct()
     {
         $message = Controller::getParameter('message');
@@ -28,4 +29,11 @@ class Repeat
         
         Controller::getinstance()->addOutput(['message' => $output]);
     }
+
+    public function go()
+    {
+
+    }
+
+
 }
