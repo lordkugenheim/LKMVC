@@ -6,8 +6,9 @@ class Controller
 {
     private static $instance;
 
-    private $httpCode;
+    private $output = [];
     private $headers = [];
+    private $httpCode;
 
     public static function getInstance()
     {
@@ -32,29 +33,58 @@ class Controller
         return $endpoint_name::getInstance();
     }
 
+    public function gethttpCode()
+    {
+        return $this->httpCode;
+    }
+
+    public function sethttpCode($httpCode)
+    {
+        if (is_numeric($httpCode)) {
+            $this->httpCode = $httpCode;
+            return true;
+        }
+        return false;
+    }
+
+    public function setSuccess()
+    {
+        if (strpos($this->httpCode, '2') === 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public function addHeader($header)
+    {
+        $this->headers[] = $header;
+    }
+    
+    public function addOutput($type, $message)
+    {
+        $this->output[$type] = $message;
+    }
+    
     private function getBody($output = false)
     {
-        if (!$output) {
-            // Get output from the response object
-        }
+        $output = $this->output;
+        $output['success'] = $this->setSuccess();
         return json_encode($output);
-        // Todo move to the output object
-        // $this->addOutput(['status' => $this->status ? 'success' : 'error']);
     }
 
     private function sendHeaders()
     {
-        header('Content-Type: application/json');
+        // header('Content-Type: application/json');
         header("Access-Control-Allow-Origin: *");
         foreach ($this->headers as $header) {
             header($header);
         }
     }
 
-    // public function sendAll()
-    // {
-    //     http_response_code(Controller::getinstance()->getHttpCode());
-    //     Controller::getinstance()->sendHeaders();
-    //     echo Controller::getinstance()->getBody();
-    // }
+    public function sendAll()
+    {
+        http_response_code($this->httpCode);
+        $this->sendHeaders();
+        echo $this->getBody();
+    }
 }
