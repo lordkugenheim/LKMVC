@@ -7,6 +7,7 @@ class Controller
     public static $instance;
 
     private $httpCode;
+    private $headers = [];
 
     const ALLOWED_METHODS = [
         'GET',
@@ -83,7 +84,7 @@ class Controller
         if (!$output) {
             // Get output from the response object
         }
-        return json_encode($this->output);
+        return json_encode($output);
         // Todo move to the output object
         // $this->addOutput(['status' => $this->status ? 'success' : 'error']);
     }
