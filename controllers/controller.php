@@ -2,19 +2,12 @@
 
 namespace Core;
 
-class Controller
+trait MasterController
 {
     public static $instance;
 
     private $httpCode;
     private $headers = [];
-
-    const ALLOWED_METHODS = [
-        'GET',
-        'POST',
-        'PUT',
-        'DELETE',
-    ];
 
     public static function getInstance()
     {
