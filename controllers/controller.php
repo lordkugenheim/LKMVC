@@ -6,10 +6,7 @@ class Controller
 {
     public static $instance;
 
-    private $httpCode = 400;
-    private $status = false;
-    private $output = [];
-    private $headers = [];
+    private $httpCode;
 
     const ALLOWED_METHODS = [
         'GET',
@@ -26,10 +23,22 @@ class Controller
         return self::$instance;
     }
 
-    public function allowedMethod($allowed_methods = self::ALLOWED_METHODS)
+    public static function isvalidEndpoint($endpoint_name)
     {
-        if (in_array($_SERVER['REQUEST_METHOD'], $allowed_methods)) {
+        if (file_exists(DIR_CONTROL . $endpoint_name) && file_exists(DIR_MODEL . $endpoint_name)) {
             return true;
+        }
+        return false;
+    }
+
+    public static function getEndpoint($endpoint_name)
+    {
+        if (Controller::isvalidEndpoint($endpoint_name)) {
+            include_once(DIR_CONTROL . $endpoint_name);
+            include_once(DIR_MODEL . $endpoint_name);
+            if (function_exists($endpoint_name::getinstance())) {
+                return $endpoint_name::getinstance();
+            }
         }
         return false;
     }
@@ -41,6 +50,11 @@ class Controller
             return true;
         }
         return false;
+    }
+
+    public function setHeader($header)
+    {
+        $this->headers[] = $header;
     }
 
     public static function getParameter($parameter)
@@ -56,44 +70,25 @@ class Controller
         return $this->httpCode;
     }
 
-    public function addHeader($header)
+    public function isvalidRoute($allowed_methods = self::ALLOWED_METHODS)
     {
-        $this->headers[] = $header;
-    }
-
-    public function addOutput($output)
-    {
-        if (is_array($output)) {
-            foreach ($output as $key => $value) {
-                $this->output[$key] = $value;
-            }
+        if (in_array($_SERVER['REQUEST_METHOD'], $allowed_methods)) {
+            return true;
         }
+        return false;
     }
 
-    // TODO - change this to set based on the response code
-    public function setSuccess($success = true)
+    public function getBody($output = false)
     {
-        $this->status = (bool)$success;
-    }
-
-    public function send()
-    {
-        $this->sendHeaders();
-        http_response_code($this->getHttpCode());
-        echo $this->buildResponse();
-        die;
-    }
-
-    private function buildResponse()
-    {
-        if (empty($this->output)) {
-            $this->addOutput(['message'=>'Requested endpoint is unavailable']);
+        if (!$output) {
+            // Get output from the response object
         }
-        $this->addOutput(['status' => $this->status ? 'success' : 'error']);
         return json_encode($this->output);
+        // Todo move to the output object
+        // $this->addOutput(['status' => $this->status ? 'success' : 'error']);
     }
 
-    private function sendHeaders()
+    public function sendHeaders()
     {
         header('Content-Type: application/json');
         header("Access-Control-Allow-Origin: *");
