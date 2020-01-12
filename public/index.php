@@ -1,5 +1,7 @@
 <?php
 
+namespace Core;
+
 foreach (['config', 'classes'] as $type) {
     foreach (glob('../' . $type . '/*.php') as $filename) {
         include $filename;
@@ -25,4 +27,4 @@ if (class_exists($classname)) {
     $class = new $classname();
 }
 
-Core\Controller::getinstance()->send();
+Controller::getinstance()->send();
