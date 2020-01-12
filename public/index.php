@@ -19,6 +19,4 @@ if (Controller::isvalidEndpoint($endpoint_name)) {
     // Send invalid endpoint error
 }
 
-http_response_code(Controller::getinstance()->getHttpCode());
-Controller::getinstance()->sendHeaders();
-echo Controller::getinstance()->getBody();
+Controller::getinstance()->sendAll();

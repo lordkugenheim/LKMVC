@@ -78,7 +78,7 @@ class Controller
         return false;
     }
 
-    public function getBody($output = false)
+    private function getBody($output = false)
     {
         if (!$output) {
             // Get output from the response object
@@ -88,12 +88,19 @@ class Controller
         // $this->addOutput(['status' => $this->status ? 'success' : 'error']);
     }
 
-    public function sendHeaders()
+    private function sendHeaders()
     {
         header('Content-Type: application/json');
         header("Access-Control-Allow-Origin: *");
         foreach ($this->headers as $header) {
             header($header);
         }
+    }
+
+    public function sendAll()
+    {
+        http_response_code(Controller::getinstance()->getHttpCode());
+        Controller::getinstance()->sendHeaders();
+        echo Controller::getinstance()->getBody();
     }
 }
