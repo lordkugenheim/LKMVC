@@ -1,8 +1,16 @@
 {
     "name": "ben-taylor.co.uk/devlop-api",
     "description": "An API that is designed to do things and return stuff",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Ben Taylor-Wilson",
+            "email": "ben@ben-taylor.co.uk"
+        }
+    ],    
     "license": "MIT",
+    "require": {},
     "autoload": {
-        "psr-4": { "Core\\": "[config/, classes/]" }
+        "classmap": ["classes/"]
     }
 }

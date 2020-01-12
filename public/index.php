@@ -1,13 +1,9 @@
 <?php
 
-namespace Core;
+use Core;
 
-foreach (['config', 'classes'] as $type) {
-    foreach (glob('../' . $type . '/*.php') as $filename) {
-        include $filename;
-    }
-}
-
+require __DIR__ . '/../config/config.php';
+require DIR_ROOT . 'vendor\autoload.php';
 require DIR_CONTROL . 'controller.php';
 
 $endpoint = explode('/', $_SERVER['REQUEST_URI'])[1];
