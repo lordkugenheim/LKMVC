@@ -10,7 +10,5 @@
     ],    
     "license": "MIT",
     "require": {},
-    "autoload": {
-        "classmap": ["controllers/", "models/", "traits/", "interfaces/"]
-    }
+    "autoload": {}
 }
