@@ -1,7 +1,5 @@
 <?php
 
-namespace Core;
-
 class Request
 {
     private $controller;
