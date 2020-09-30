@@ -4,5 +4,5 @@
     RewriteBase /develop-api/public
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^(.+)$ index.php?param=$1 [QSA,L]
+    RewriteRule ^(.+)$ index.php?params=$1 [QSA,L]
 </IfModule>
