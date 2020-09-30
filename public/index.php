@@ -1,7 +1,7 @@
 <?php
 
-require '../app/config/core.php';
-require DIR_APP . 'bootstrap.php';
+require '../config/core.php';
+require DIR_APP . 'Bootstrap.php';
 
 $app = new Core();
 
