@@ -7,18 +7,8 @@ class Request
     private $controller;
     private $include_method = true;
     private $method;
-    private $http_request_method = 'GET';
+    private $http_request_method;
     private $other_parameters = [];
-
-    public function __construct()
-    {
-        $this->getController();
-        if ($this->include_method) {
-            $this->getMethod();
-        }
-        $this->getHttpMethod();
-        $this->getOtherParams();
-    }
 
     public function __get($property)
     {
