@@ -11,13 +11,15 @@ class Core
         if ($this->startController($request->controller)) {
             if ($request->include_method && method_exists($controller, $request->method)) {
                 $this->requestMethod($request->method);
+            } else {
+                $this->requestMethod('http' . $request->http_request_method);
             }
         }
     }
 
     private function startController($controller)
     {
-        if (file_exists(DIR_CONTROL . $controller)) {
+        if (file_exists(DIR_CONTROL . $controller . '.php')) {
             $this->controller = new $controller();
             return true;
         }
@@ -26,8 +28,8 @@ class Core
 
     private function requestMethod($method)
     {
-        if (get_class($controller) && method_exists($controller, $method)) {
-            $controller->$method();
+        if (get_class($this->controller) && method_exists($this->controller, $method)) {
+            $this->controller->$method();
         }
     }
 }
