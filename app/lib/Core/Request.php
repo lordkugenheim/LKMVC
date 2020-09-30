@@ -12,6 +12,7 @@ class Request
 
     public function __construct()
     {
+        $this->getParams();
         $this->getController();
         if ($this->include_method) {
             $this->getMethod();
@@ -31,9 +32,12 @@ class Request
 
     private function getParams()
     {
-        if (isset($_GET['params']) {
-
+        if (isset($_GET['params']) && $_GET['params'] != '') {
+            $url = filter_var(rtrim($_GET['params'], '/'), FILTER_SANITIZE_URL);
+        } else {
+            $url = false;
         }
+        return $url ? explode('/', $url) : [];
     }
 
     private function getController()
