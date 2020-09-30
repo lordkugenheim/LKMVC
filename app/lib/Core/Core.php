@@ -11,9 +11,10 @@ class Core
         $request = new Request();
 
         if ($this->startController($request->controller)) {
-
+            if ($request->include_method && method_exists($controller, $request->method)) {
+                $this->requestMethod($request->method);
+            }
         }
-
     }
 
     private function startController($controller)
@@ -23,5 +24,12 @@ class Core
             return true;
         }
         return false;
+    }
+
+    private function requestMethod($method)
+    {
+        if (get_class($controller) && method_exists($controller, $method)) {
+            $controller->$method();
+        }
     }
 }
