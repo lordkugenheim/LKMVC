@@ -40,7 +40,7 @@ class Request
 
     private function getController()
     {
-        $this->controller = uc_words($this->getValatIndex(0));
+        $this->controller = ucwords($this->getValatIndex(0));
     }
 
     private function getMethod()
