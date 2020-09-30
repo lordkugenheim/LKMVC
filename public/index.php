@@ -5,7 +5,7 @@ namespace Core;
 require '../app/config/core.php';
 require DIR_APP . 'bootstrap.php';
 
-$controller = new Controller();
+$app = new Core();
 
 /*
 
