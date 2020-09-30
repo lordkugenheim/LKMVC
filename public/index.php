@@ -2,8 +2,12 @@
 
 namespace Core;
 
-require __DIR__ . '\..\config.php';
-require DIR_ROOT . 'vendor\autoload.php';
+require '../app/config/core.php';
+require DIR_APP . 'bootstrap.php';
+
+$controller = new Controller();
+
+/*
 
 $endpoint_name = explode('/', $_SERVER['REQUEST_URI'])[1];
 
@@ -19,3 +23,4 @@ if (Controller::isvalidEndpoint($endpoint_name)) {
 }
 
 Controller::getinstance()->sendAll();
+*/
