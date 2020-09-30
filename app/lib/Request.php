@@ -48,7 +48,7 @@ class Request
 
     private function getHttpMethod()
     {
-        $this->http_request_method = $_SERVER['REQUEST_METHOD'];
+        $this->http_request_method = ucwords($_SERVER['REQUEST_METHOD']);
     }
 
     private function getOtherParams()

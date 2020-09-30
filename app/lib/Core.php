@@ -9,7 +9,7 @@ class Core
         $request = new Request();
 
         if ($this->startController($request->controller)) {
-            if ($request->include_method && method_exists($controller, $request->method)) {
+            if ($request->include_method && method_exists($this->controller, $request->method)) {
                 $this->requestMethod($request->method);
             } else {
                 $this->requestMethod('http' . $request->http_request_method);
