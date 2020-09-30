@@ -10,6 +10,16 @@ class Request
     private $http_request_method;
     private $other_parameters = [];
 
+    public function __construct()
+    {
+        $this->getController();
+        if ($this->include_method) {
+            $this->getMethod();
+        }
+        $this->getHttpMethod();
+        $this->getOtherParams();
+    }
+
     public function __get($property)
     {
         if (isset($this->$property)) {
