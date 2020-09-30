@@ -40,23 +40,30 @@ class Request
 
     private function getController()
     {
-        if (array_key_exists(0, $this->getParams())) {
-            $this->controller = $this->getParams()[0];
-        }
+        $this->controller = $this->getValatIndex(0);
     }
 
     private function getMethod()
     {
-
+        $this->method = $this->getValatIndex(1);
     }
 
     private function getHttpMethod()
     {
-
+        $this->http_request_method = $_SERVER['REQUEST_METHOD'];
     }
 
     private function getOtherParams()
     {
+        $offset = $this->include_method ? 2 : 1;
+        $this->other_parameters = array_slice($this->getParams(), $offset);
+    }
 
+    private function getValatIndex($index)
+    {
+        if (array_key_exists($index, $this->getParams())) {
+            return $this->getParams()[$index];
+        }
+        return false;
     }
 }
