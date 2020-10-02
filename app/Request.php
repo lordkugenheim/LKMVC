@@ -3,7 +3,6 @@
 class Request
 {
     private $controller;
-    private $include_method = true;
     private $method;
     private $http_request_method;
     private $other_parameters = [];
@@ -11,7 +10,7 @@ class Request
     public function __construct()
     {
         $this->getController();
-        if ($this->include_method) {
+        if (SECOND_PARAM_METHOD) {
             $this->getMethod();
         }
         $this->getHttpMethod();
@@ -53,7 +52,7 @@ class Request
 
     private function getOtherParams()
     {
-        $offset = $this->include_method ? 2 : 1;
+        $offset = SECOND_PARAM_METHOD ? 2 : 1;
         $this->other_parameters = array_slice($this->getParams(), $offset);
     }
 
