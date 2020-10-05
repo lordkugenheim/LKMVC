@@ -6,6 +6,6 @@ class Repeat extends Controller
     {
         $request_data = $this->request->other_parameters;
         $model_data = $this->model->httpGet($request_data);
-        var_dump($model_data);
+        $this->loadView('json/success', $model_data);
     }
 }
