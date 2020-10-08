@@ -2,65 +2,46 @@
 
 class Request
 {
-    private $controller;
-    private $method;
-    private $http_request_method;
-    private $other_parameters = [];
 
-    public function __construct()
+    private function __construct()
     {
-        $this->getController();
+        return false;
+    }
+
+    public static function controller()
+    {
+        return ucwords(self::getValatIndex(0));
+    }
+
+    public static function method()
+    {
         if (SECOND_PARAM_METHOD) {
-            $this->getMethod();
-        }
-        $this->getHttpMethod();
-        $this->getOtherParams();
-    }
-
-    public function __get($property)
-    {
-        if (isset($this->$property)) {
-            return $this->$property;
+            return ucwords(self::getValatIndex(1));
         } else {
-            return false;
+            return 'http' . ucwords($_SERVER['REQUEST_METHOD']);
         }
     }
 
-    private function getParams()
-    {
-        $url = false;
-        if (isset($_GET['params']) && $_GET['params'] != '') {
-            $url = filter_var(rtrim($_GET['params'], '/'), FILTER_SANITIZE_URL);
-        }
-        return $url ? explode('/', $url) : [];
-    }
-
-    private function getController()
-    {
-        $this->controller = ucwords($this->getValatIndex(0));
-    }
-
-    private function getMethod()
-    {
-        $this->method = $this->getValatIndex(1);
-    }
-
-    private function getHttpMethod()
-    {
-        $this->http_request_method = ucwords($_SERVER['REQUEST_METHOD']);
-    }
-
-    private function getOtherParams()
+    public static function otherParameters()
     {
         $offset = SECOND_PARAM_METHOD ? 2 : 1;
-        $this->other_parameters = array_slice($this->getParams(), $offset);
+        return array_slice(self::getParams(), $offset);
     }
 
-    private function getValatIndex($index)
+    private static function getValatIndex($index)
     {
-        if (array_key_exists($index, $this->getParams())) {
-            return $this->getParams()[$index];
+        if (array_key_exists($index, self::getParams())) {
+            return self::getParams()[$index];
         }
         return false;
+    }
+
+    private static function getParams()
+    {
+        if (isset($_GET['params']) && $_GET['params'] != '') {
+            $url = filter_var(rtrim($_GET['params'], '/'), FILTER_SANITIZE_URL);
+            return explode('/', $url);
+        }
+        return [];
     }
 }

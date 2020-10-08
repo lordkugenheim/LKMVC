@@ -2,13 +2,11 @@
 
 class Controller
 {
-    protected $request;
     protected $view;
     protected $model;
 
     public function __construct()
     {
-        $this->request = new Request();
         $this->loadModel(get_called_class());
     }
 

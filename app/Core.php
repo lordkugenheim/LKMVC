@@ -6,13 +6,9 @@ class Core
 
     public function __construct()
     {
-        $request = new Request();
-
-        if ($this->startController($request->controller)) {
-            if ($request->include_method && method_exists($this->controller, $request->method)) {
-                $this->requestMethod($request->method);
-            } else {
-                $this->requestMethod('http' . $request->http_request_method);
+        if ($this->startController(Request::controller())) {
+            if (method_exists($this->controller, Request::method())) {
+                $this->requestMethod(Request::method());
             }
         }
     }
