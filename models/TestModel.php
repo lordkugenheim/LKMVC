@@ -1,6 +1,6 @@
 <?php
 
-class RepeatModel
+class TestModel
 {
     public function httpGet($data)
     {

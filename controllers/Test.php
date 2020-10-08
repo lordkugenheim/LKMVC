@@ -1,6 +1,6 @@
 <?php
 
-class Repeat extends Controller
+class Test extends Controller
 {
     public function httpGet()
     {
