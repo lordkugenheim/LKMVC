@@ -1,8 +1,11 @@
 <?php
 
+// TODO improve many
+
 class Database
 {
     private $dbh;
+    private $stmt;
 
     public function __construct()
     {
@@ -23,7 +26,6 @@ class Database
     public function insert($sql, $args = [])
     {
         return $this->transaction($sql, $args);
-        // returns id of insert(s)
     }
 
     public function update($sql, $args = [])
@@ -34,9 +36,9 @@ class Database
     private function query($sql, $args = [])
     {
         try {
-            $stmt = $this->dbh->prepare($sql);
-            $stmt->execute($args);
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            $this->stmt = $this->dbh->prepare($sql);
+            $this->stmt->execute($args);
+            return $this->stmt->fetch(PDO::FETCH_ASSOC);
         } catch (Exception $e) {
             return $e;
             //do something with $e
