@@ -1,7 +1,5 @@
 <?php
 
-// TODO improve many
-
 class Database
 {
     private $dbh;
