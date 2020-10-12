@@ -49,14 +49,13 @@ class Database
     {
         try {
             $this->dbh->beginTransaction();
-            $this->dbh->prepare($sql);
-            foreach ($args as $key => $value) {
-                $this->dbh->bindParam($key, $value);
-            }
+            $this->stmt = $this->dbh->prepare($sql);
+            $this->stmt->execute($args);
             $this->dbh->commit();
-        } catch (Exception $e) {
+        } catch (PDOException | Exception $exception) {
             $this->dbh->rollback();
-            // do something with $e
+            $this->error = $exception;
         }
+        return isset($exception) ? false : true;
     }
 }
