@@ -10,6 +10,7 @@ class Database
     public function __construct()
     {
         $this->dbh = new PDO('mysql:host=' . MYSQL_HOST . ';dbname=' . MYSQL_DBNAME, MYSQL_USER, MYSQL_PASS);
+        $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
     public function __destruct()
@@ -51,11 +52,13 @@ class Database
             $this->dbh->beginTransaction();
             $this->stmt = $this->dbh->prepare($sql);
             $this->stmt->execute($args);
+            $this->last_insert_id = $this->dbh->lastInsertId();
             $this->dbh->commit();
+            $this->last_error = false;
         } catch (PDOException | Exception $exception) {
             $this->dbh->rollback();
-            $this->error = $exception;
+            $this->last_error = $exception;
         }
-        return isset($exception) ? false : true;
+        return $this->last_error ? false : true;
     }
 }
