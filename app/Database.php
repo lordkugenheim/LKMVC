@@ -6,11 +6,20 @@ class Database
     private $stmt;
     private $last_rows_updated;
     private $last_insert_id;
+    private $last_error;
 
     public function __construct()
     {
-        $this->dbh = new PDO('mysql:host=' . MYSQL_HOST . ';dbname=' . MYSQL_DBNAME, MYSQL_USER, MYSQL_PASS);
-        $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $dsn = 'mysql:host=' . MYSQL_HOST . ';dbname=' . MYSQL_DBNAME;
+        $options = [
+            PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION
+        ];
+
+        try {
+            $this->dbh = new PDO($dsn, MYSQL_USER, MYSQL_PASS, $options);
+        } catch (Exception $exception) {
+            $this->last_error = $exception->getMessage();
+        }
     }
 
     public function select($sql, $args = [])
