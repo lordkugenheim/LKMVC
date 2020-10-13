@@ -1,11 +1,10 @@
-# Develop-Api
+# LKMVC
 
-An API that is designed to do things and return stuff
+A simple PHP framework providing a MVC workflow that is suitable for app development or website development. Includes database connector using PDO. 
 
 ## Authors
 
-* **Ben Taylor-Wilson** - *Responsible for this nightmare* - [Ben-Taylor.co.uk](https://www.ben-taylor.co.uk/)
-* **Andrew Kent** - *Slightly responsible for this nightmare* - [AndrewKent.me](https://www.andrewkent.me/)
+* **Ben Taylor-Wilson** - [Ben-Taylor.co.uk](https://www.ben-taylor.co.uk/)
 
 ## License
 

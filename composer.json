@@ -1,6 +1,6 @@
 {
-    "name": "ben-taylor.co.uk/devlop-api",
-    "description": "An API that is designed to do things and return stuff",
+    "name": "ben-taylor.co.uk/LKMVC",
+    "description": "A simple PHP framework to build MVC applications",
     "type": "project",
     "authors": [
         {
