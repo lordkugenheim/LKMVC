@@ -1,7 +1,5 @@
 <?php
 
-//TODO add params to args
-
 class Database
 {
     private $dbh;
