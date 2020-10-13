@@ -1,5 +1,7 @@
 <?php
 
+//TODO add params to args
+
 class Database
 {
     private $dbh;
@@ -50,7 +52,8 @@ class Database
     {
         try {
             $this->stmt = $this->dbh->prepare($sql);
-            $this->stmt->execute($args);
+            $this->bindParams($args);
+            $this->stmt->execute();
             $this->last_error = false;
         } catch (PDOException | Exception $exception) {
             $this->last_error = $exception;
@@ -66,7 +69,8 @@ class Database
         try {
             $this->dbh->beginTransaction();
             $this->stmt = $this->dbh->prepare($sql);
-            $this->stmt->execute($args);
+            $this->bindParams($args);
+            $this->stmt->execute();
             $this->last_insert_id = $this->dbh->lastInsertId();
             $this->last_rows_updated = $this->stmt->rowCount();
             $this->dbh->commit();
@@ -76,5 +80,32 @@ class Database
             $this->last_error = $exception;
         }
         return $this->last_error ? false : true;
+    }
+
+    private function bindParams($args = [])
+    {
+        if ($this->stmt) {
+            foreach ($args as $name => $value) {
+                if (is_array($value)) {
+                    $type = $value[1];
+                    $value = $value[0];
+                } else {
+                    switch (gettype($value)) {
+                        case 'boolean':
+                            $type = PDO::PARAM_BOOL;
+                            break;
+                        case 'integer':
+                            $type = PDO::PARAM_INT;
+                            break;
+                        default:
+                            $type = PDO::PARAM_STR;
+                            break;
+                    }
+                }
+                $this->stmt->bindParam($name, $value, $type);
+            }
+            return true;
+        }
+        return false;
     }
 }
