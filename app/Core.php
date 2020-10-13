@@ -4,16 +4,18 @@ class Core
 {
     private $controller;
 
-    public function __construct()
+    public function initialise()
     {
-        if ($this->startController(Request::controller())) {
+        if ($this->callController(Request::controller())) {
             if (method_exists($this->controller, Request::method())) {
-                $this->requestMethod(Request::method());
+                $this->callMethod(Request::method());
+                return true;
             }
         }
+        return false;
     }
 
-    private function startController($controller)
+    private function callController($controller)
     {
         if (file_exists(DIR_CONTROL . $controller . '.php')) {
             $this->controller = new $controller();
@@ -22,7 +24,7 @@ class Core
         return false;
     }
 
-    private function requestMethod($method)
+    private function callMethod($method)
     {
         if (get_class($this->controller) && method_exists($this->controller, $method)) {
             $this->controller->$method();

@@ -10,7 +10,7 @@ class Controller
         $this->loadModel(get_called_class());
     }
 
-    public function loadView($view_name, $data)
+    public static function loadView($view_name, $data)
     {
         $view_path = DIR_VIEW . ltrim($view_name, '/') . '.php';
         if (file_exists($view_path)) {

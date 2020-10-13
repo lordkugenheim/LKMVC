@@ -6,6 +6,6 @@ class Test extends Controller
     {
         $request_data = Request::otherParameters();
         $model_data = $this->model->httpGet($request_data);
-        $this->loadView('json', $model_data);
+        Controller::loadView('json', $model_data);
     }
 }
