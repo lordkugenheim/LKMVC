@@ -1,5 +1,14 @@
 <?php
-
+/**
+ * Database class for LKMVC Framework
+ *
+ * provides database access via PDO
+ *
+ * see readme.md for usage
+ *
+ * @author Ben Taylor-Wilson <ben@ben-taylor.co.uk>
+ * @see http://www.ben-taylor.co.uk/LKMVC
+ */
 class Database
 {
     private $dbh;
@@ -8,6 +17,9 @@ class Database
     private $last_insert_id;
     private $last_error;
 
+    /**
+     * Load PDO and set options
+     */
     public function __construct()
     {
         $dsn = 'mysql:host=' . MYSQL_HOST . ';dbname=' . MYSQL_DBNAME;
@@ -22,12 +34,24 @@ class Database
         }
     }
 
+    /**
+     * Select Query
+     * @param $sql string SQL query
+     * @param $args array of arguments
+     * @return array result set
+     */
     public function select($sql, $args = [])
     {
         $result = $this->query($sql, $args);
         return $result ? $result : [];
     }
 
+    /**
+     * Insert Query
+     * @param $sql string SQL query
+     * @param $args array of arguments
+     * @return mixed ID of insert or false on failure
+     */
     public function insert($sql, $args = [])
     {
         if ($this->transaction($sql, $args)) {
@@ -37,6 +61,12 @@ class Database
         }
     }
 
+    /**
+     * Update Query
+     * @param $sql string SQL query
+     * @param $args array of arguments
+     * $return mixed number of rows updated or false on failure
+     */
     public function update($sql, $args = [])
     {
         if ($this->transaction($sql, $args)) {
@@ -46,6 +76,12 @@ class Database
         }
     }
 
+    /**
+     * PDO Query Wrapper
+     * @param $sql string SQL query
+     * @param $args array of arguments
+     * $return mixed rowset as array or false on failure
+     */
     private function query($sql, $args = [])
     {
         try {
@@ -62,6 +98,12 @@ class Database
         return false;
     }
 
+    /**
+     * PDO Transaction Wrapper
+     * @param $sql string SQL query
+     * @param $args array of arguments
+     * $return bool
+     */
     private function transaction($sql, $args = [])
     {
         try {
@@ -80,6 +122,11 @@ class Database
         return $this->last_error ? false : true;
     }
 
+    /**
+     * Bind parameters to the active stmt
+     * @param $args array of arguments
+     * $return bool
+     */
     private function bindParams($args = [])
     {
         if ($this->stmt) {
