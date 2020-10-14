@@ -1,5 +1,6 @@
 <?php
 
+// Directory constants
 define('DIR_ROOT', dirname(__DIR__, 1) . '/');
 define('DIR_APP', DIR_ROOT . 'app/');
 define('DIR_CONFIG', DIR_ROOT . 'config/');
