@@ -61,7 +61,7 @@ class Request
 
     /**
      * Return a parameter from the url at a specific index
-     * @param index int
+     * @param $index int
      * @return mixed - array on success, false on failure
      */
     private static function getValatIndex($index)

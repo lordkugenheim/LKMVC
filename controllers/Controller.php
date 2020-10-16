@@ -48,5 +48,4 @@ class Controller
         $model_name .= 'Model';
         $this->model = new $model_name();
     }
-    
 }
