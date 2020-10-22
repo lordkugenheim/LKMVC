@@ -79,17 +79,10 @@ class Request
      */
     private static function getParams()
     {
-        $params = [];
         if (isset($_GET['params']) && $_GET['params'] != '') {
             $url = filter_var(rtrim($_GET['params'], '/'), FILTER_SANITIZE_URL);
-            $params['_PARAMS'] = explode('/', $url);
+            return explode('/', $url);
         }
-        if (!empty($_POST)) {
-            $params['_POST'] = $_POST;
-        }
-        if (!empty($_FILES)) {
-            $params['_FILES'] = $_FILES;
-        }
-        return $params;
+        return [];
     }
 }
