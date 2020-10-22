@@ -39,7 +39,7 @@ class Request
     public static function method()
     {
         if (SECOND_PARAM_METHOD) {
-            return ucwords(self::getValatIndex(1));
+            return ucwords(self::getValatIndex(1)) . ucwords($_SERVER['REQUEST_METHOD']);
         } else {
             return 'http' . ucwords($_SERVER['REQUEST_METHOD']);
         }

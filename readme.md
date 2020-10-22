@@ -10,11 +10,14 @@ in `public/.htaccess` change `RewriteBase` (line 4) to your own path to the publ
 
 ## Usage
 
-You can change how this framework behaves using the `SECOND_PARAM_METHOD` (found in `/config/core.php`). With this set to true, URLs are processed as `www.example.com/controller/method/param1/param2/...`. With this set to false, URLs are processed as `www.example.com/controller/param1/param2/...` and using the http request type as the method.
+You can change how this framework behaves using the `SECOND_PARAM_METHOD` (found in `/config/core.php`). With this set to true, URLs are processed as `www.example.com/controller/method/param1/param2/...`. With this set to false, URLs are processed as `www.example.com/controller/param1/param2/...`.
 
 When adding your own endpoints, you must name your controller and model classes to match the endpoint name. For example the `www.example.com/test/` endpoint must have a file named `/controllers/Test.php` and `/controllers/TestModel.php`. 
 
-The controller class must have a method either matching the second parameterin the url or the http request method (with `http` as a prefix) depending on `SECOND_PARAM_METHOD` (as above).
+Depending on `SECOND_PARAM_METHOD`, the controller class must include a method that follows the following naming convention:
+
+ - If `SECOND_PARAM_METHOD` is true, the name must be the endpoint's second parameter followed by the http request method. For example in `www.example.com/test` the method would be `TestGet` or `TestPost`
+ - If `SECOND_PARAM_METHOD` is false, the name must be `http` followed by the http request method. In the above instance this would be `httpGet` or `httpPost`.
 
 A test endpoint is included that will return whatever string you send to it as a JSON object.
 
