@@ -20,6 +20,14 @@ A test endpoint is included that will return whatever string you send to it as a
 
 ## Database Class
 
+The database class includes methods to perform SELECT, UPDATE and INSERT queries once the class has been instantiated.
+
+Each method takes a `$sql` parameter which should be your query using named parameters. The `$args` parameter must be an array in the following format: `['param_name' => ['value', PDO::PARAM]]` or `['param_name' => 'value']` and it will automatically interpret the data type.
+
+The `$db->select()` method will return your results as an array. `$db->update()` will return the number of rows updated and `$db->insert` will return the ID of the last inserted record.
+
+Failed Insert or Update commands will be reverted on failure. `last_error` is available as a property that will contain the last PDO error.
+
 ## Authors
 
 * **Ben Taylor-Wilson** - [Ben-Taylor.co.uk](https://www.ben-taylor.co.uk/)
