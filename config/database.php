@@ -1,7 +1,7 @@
 <?php
 
 // Database configuration
-define('MYSQL_HOST', 'localhost');
-define('MYSQL_DBNAME', 'dev_test');
-define('MYSQL_USER', 'root');
+define('MYSQL_HOST', '');
+define('MYSQL_DBNAME', '');
+define('MYSQL_USER', '');
 define('MYSQL_PASS', '');

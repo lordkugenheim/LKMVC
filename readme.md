@@ -1,6 +1,16 @@
 # LKMVC
 
-A simple PHP framework providing a MVC workflow that is suitable for app development or website development. Includes database connector using PDO. 
+A simple PHP framework providing a MVC workflow that is suitable for app development or website development or both if you really want to. Includes database connector using PDO. 
+
+## Installation
+
+Clone this repo into your root directory
+in **config/database.php** set your own database variables
+in **public/.htaccess** change RewriteBase (line 4) to your own path to the public folder
+
+## Usage
+
+## Database Class
 
 ## Authors
 
@@ -8,4 +18,4 @@ A simple PHP framework providing a MVC workflow that is suitable for app develop
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
