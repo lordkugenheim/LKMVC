@@ -1,6 +1,6 @@
 # LKMVC
 
-A simple PHP framework providing a MVC workflow that is suitable for app development or website development or both if you really want to. Includes database connector using PDO. 
+A simple PHP framework providing a MVC workflow that is suitable for api development or website development or both if you really want to. Includes database connector using PDO. 
 
 ## Installation
 
